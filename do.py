@@ -25,7 +25,7 @@ def cal_gpa(d):
 
 def query_by_name(df, name, num):
     d = df[df['学号'] == np.int64(name)] if num else df[df['姓名'] == name]
-    gpa_data = d.groupby(['学年度', '学期'], include_groups=False).apply(cal_gpa).to_dict()
+    gpa_data = d.groupby(['学年度', '学期']).apply(cal_gpa, include_groups=False).to_dict()
     gpa_data['总GPA'] = cal_gpa(d)
     return {f"{k[0]}{k[1]}" if isinstance(k, tuple) else k: v for k, v in gpa_data.items()}, d
 
